@@ -1,0 +1,45 @@
+input[type=submit]{
+    &:hover{
+        cursor: hand;
+    }
+}
+.btn{
+    color: #1DA1F2;
+    fill: none;
+    border: none;
+    border: 1px solid #1DA1F2;
+    padding: 1.2rem;
+    border-radius: 12rem;
+    background-color: white;
+    font-family: "Arial";
+    font-size:  1.4rem;
+    font-weight: 700;
+    margin-left: 0.2rem;
+    :hover{
+        cursor: hand;
+    }
+    &-blue{
+        background-color: #1DA1F2;
+        color: white;
+    }
+}
+
+.button{
+    display: inline-block;
+    border: 0.5rem solid $medium-green;
+    border-radius: 1rem;
+    font-family: Coegit;
+    font-size: 3.4rem;
+    color: $medium-green;
+    padding: 0.5rem 0.8rem;
+
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.2);
+        border: 0.5rem solid $light-green;
+        color: $light-green;
+
+        transition: all 100ms ease-in;
+    }
+
+}
