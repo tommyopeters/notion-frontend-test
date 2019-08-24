@@ -1,26 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
 
 import Header from "./components/Header";
 import Body from "./components/Body";
 import GridDisplay from "./components/GridDisplay";
-export default class Home extends Component {
+
+class Search extends Component {
   state = {
-    pictures: [],
+    search: this.props.location.search.replace("?", ""),
     loading: true,
-    redirect: false,
-    query: null
-  };
-
-  handleSubmit = () => {
-    this.setState({
-      redirect: true
-    });
-  };
-
-  handleInputChange = e => {
-    this.setState({ query: e.target.value });
+    pictures: []
   };
 
   requestPictures = (query = "african") => {
@@ -29,7 +18,9 @@ export default class Home extends Component {
 
     axios
       .get(
-        `https://api.unsplash.com/search/photos/?page=1&per_page=8&query=${query}&client_id=${applicationId}`
+        `https://api.unsplash.com/search/photos/?page=1&per_page=8&query=${
+          this.state.search
+        }&client_id=${applicationId}`
       )
       .then(data => {
         return data.data.results;
@@ -44,30 +35,21 @@ export default class Home extends Component {
   componentDidMount() {
     this.requestPictures();
   }
-
   render() {
-    if (this.state.redirect) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/search",
-            search: `?${this.state.query}`
-          }}
-        />
-      );
-    }
-
     return (
       <div>
         <Header>
-          <form onSubmit={this.handleSubmit}>
-            <i className="fas fa-search" />
-            <input
-              onChange={this.handleInputChange}
-              type="search"
-              placeholder="Search for photo"
-            />
-          </form>
+          <div className="searchresult">
+            {this.state.loading ? (
+              <h1>
+                Searching for <span>{this.state.search}</span>
+              </h1>
+            ) : (
+              <h1>
+                Search results for <span> "{this.state.search}"</span>
+              </h1>
+            )}
+          </div>
         </Header>
         <Body>
           {!this.state.loading ? (
@@ -80,3 +62,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default Search;

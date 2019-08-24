@@ -1,0 +1,108 @@
+.container {
+  width: 65%;
+  margin: auto;
+  position: relative;
+
+  $rows: num1, num2, num3, num4, num5, num6, num7, num8;
+
+  .picturegrid {
+    position: absolute;
+    width: 100%;
+    top: -4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(8, max-content);
+    grid-gap: 5rem;
+    grid-template-areas:
+      "num1 num2 num3"
+      "num1 num2 num3"
+      "num4 num2 num5"
+      "num4 num6 num5"
+      "num4 num6 num5"
+      "num7 num6 num9"
+      "num7 num8 num9"
+      "num7 num8 num9";
+
+    @for $i from 1 through length($rows) {
+      .picture-item:nth-child(#{$i}) {
+        grid-area: nth($rows, $i);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .empty {
+      position: relative;
+      height: 50rem;
+      border-radius: 0.5rem;
+      background-color: #f5f5f5;
+
+      .innertext {
+        position: absolute;
+        bottom: 4rem;
+        left: 4rem;
+        width: 50%;
+
+        span {
+          display: block;
+          height: 2rem;
+          border-radius: 0.5rem;
+          background-color: #e6e6e6;
+        }
+        span:nth-of-type(1) {
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+        span:nth-of-type(2) {
+          width: 50%;
+        }
+      }
+    }
+
+    img {
+      height: 100%;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+.picture-item {
+  position: relative;
+
+  overflow: hidden;
+
+  .innertext {
+    color: #fff;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    transition: all 1s ease-in-out;
+  }
+}
+.hidden {
+  display: none;
+}
+.shown {
+  animation: displayed 1s ease-in-out;
+}
+
+@keyframes displayed {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: inset 0px -149px 138px -39px rgba(0, 0, 0, 0.73);
+  -moz-box-shadow: inset 0px -149px 138px -39px rgba(0, 0, 0, 0.73);
+  box-shadow: inset 0px -149px 138px -39px rgba(0, 0, 0, 0.73);
+  top: 0;
+  left: 0;
+}
