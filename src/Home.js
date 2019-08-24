@@ -5,12 +5,28 @@ import { Redirect } from "react-router-dom";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import GridDisplay from "./components/GridDisplay";
+import Modal from "./components/Modal";
 export default class Home extends Component {
   state = {
     pictures: [],
     loading: true,
     redirect: false,
-    query: null
+    query: null,
+    item: null,
+    showModal: false
+  };
+
+  itemClick = clicked => {
+    this.setState({
+      item: clicked,
+      showModal: true
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      showModal: false
+    });
   };
 
   handleSubmit = () => {
@@ -71,11 +87,17 @@ export default class Home extends Component {
         </Header>
         <Body>
           {!this.state.loading ? (
-            <GridDisplay pictures={this.state.pictures} />
+            <GridDisplay
+              itemClick={this.itemClick}
+              pictures={this.state.pictures}
+            />
           ) : (
             <GridDisplay />
           )}
         </Body>
+        {this.state.showModal ? (
+          <Modal item={this.state.item} closeModal={this.closeModal} />
+        ) : null}
       </div>
     );
   }

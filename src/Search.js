@@ -4,12 +4,28 @@ import axios from "axios";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import GridDisplay from "./components/GridDisplay";
+import Modal from "./components/Modal";
 
 class Search extends Component {
   state = {
     search: this.props.location.search.replace("?", ""),
     loading: true,
-    pictures: []
+    pictures: [],
+    item: null,
+    showModal: false
+  };
+
+  itemClick = clicked => {
+    this.setState({
+      item: clicked,
+      showModal: true
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      showModal: false
+    });
   };
 
   requestPictures = (query = "african") => {
@@ -53,11 +69,17 @@ class Search extends Component {
         </Header>
         <Body>
           {!this.state.loading ? (
-            <GridDisplay pictures={this.state.pictures} />
+            <GridDisplay
+              itemClick={this.itemClick}
+              pictures={this.state.pictures}
+            />
           ) : (
             <GridDisplay />
           )}
         </Body>
+        {this.state.showModal ? (
+          <Modal item={this.state.item} closeModal={this.closeModal} />
+        ) : null}
       </div>
     );
   }

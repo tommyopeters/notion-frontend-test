@@ -10,8 +10,8 @@ class GridDisplay extends Component {
       imageLoaded: this.state.imageLoaded + 1
     });
   };
-  handleClick = () => {
-    alert("clicked");
+  handleClick = itemClicked => {
+    this.props.itemClick(itemClicked);
   };
 
   render() {
@@ -28,14 +28,11 @@ class GridDisplay extends Component {
       empty.push(newItem);
     }
 
-    console.log(this.props.pictures);
-
     if (!this.props.pictures) {
       return <div className="picturegrid">{empty}</div>;
     }
 
     const pictures = this.props.pictures.map(item => {
-      console.log(item);
       return (
         // <div key={item.id} />
         <div
@@ -43,14 +40,16 @@ class GridDisplay extends Component {
             !this.state.imageLoaded === 8 ? "hidden" : null
           }`}
           key={item.id}
-          onClick={this.handleClick}
+          onClick={() => {
+            this.handleClick(item);
+          }}
         >
           <img
             src={item.urls.small}
             alt={item.description}
             onLoad={this.incrementLoadingState}
           />
-          <div class="shadow" />
+          <div className="shadow" />
           <div
             className={`innertext ${
               !this.state.imageLoaded === 8 ? "hidden" : "shown"
